@@ -1,50 +1,58 @@
 package com.spoonypanda.tconstructcraftingtweakscompat;
 
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import com.mojang.logging.LogUtils;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.InterModComms;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.slf4j.Logger;
 
-@Mod(TConstructCraftingTweaksCompat.MODID)
-public class TConstructCraftingTweaksCompat {
-    public static final String MODID = "tconstructcraftingtweakscompat";
-    public static final int BUTTON_ADJUST_X = 25;
+@Mod("tconstructcraftingtweakscompat")
+public class TConstructCraftingTweaksCompat
+{
+    private static final Logger LOGGER = LogUtils.getLogger();
+    private static final int BUTTON_OFFSET_X = 25;
+    private static final int BUTTON_OFFSET_Y = 18;
 
-    public TConstructCraftingTweaksCompat() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onClientSetup);
+    public TConstructCraftingTweaksCompat()
+    {
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
-    private void onClientSetup(final FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
-            if (!ModList.get().isLoaded("craftingtweaks") || !ModList.get().isLoaded("tconstruct")) {
-                System.out.println("[TConstructCraftingTweaksCompat] Required mods not present, skipping integration.");
-                return;
-            }
+    private void enqueueIMC(final InterModEnqueueEvent event)
+    {
+        if (!ModList.get().isLoaded("craftingtweaks") || !ModList.get().isLoaded("tconstruct")) {
+            LOGGER.warn("[TConstructCraftingTweaksCompat] Required mods not present, skipping integration.");
+            return;
+        }
 
-            try {
-                CompoundNBT tag = new CompoundNBT();
-                tag.putString("ContainerClass", "slimeknights.tconstruct.tables.inventory.table.CraftingStationContainer");
-                tag.putInt("GridSlotNumber", 1);
-                tag.putInt("GridSize", 9);
+        try {
+            CompoundTag tag = new CompoundTag();
+            tag.putString("ContainerClass", "slimeknights.tconstruct.tables.menu.CraftingStationContainerMenu");
+            tag.putInt("GridSlotNumber", 1);
+            tag.putInt("GridSize", 9);
 
-                CompoundNBT clear = new CompoundNBT();
-                clear.putInt("ButtonX", BUTTON_ADJUST_X);
-                tag.put("TweakClear", clear);
+            CompoundTag tweakRotate = new CompoundTag();
+            tweakRotate.putInt("ButtonX",BUTTON_OFFSET_X);
+            tag.put("TweakRotate", tweakRotate);
+            CompoundTag tweakBalance = new CompoundTag();
+            tweakBalance.putInt("ButtonX",BUTTON_OFFSET_X);
+            tweakBalance.putInt("ButtonY",BUTTON_OFFSET_Y);
+            tag.put("TweakBalance", tweakBalance);
+            CompoundTag tweakClear = new CompoundTag();
+            tweakClear.putInt("ButtonX",BUTTON_OFFSET_X);
+            tweakClear.putInt("ButtonY",BUTTON_OFFSET_Y*2);
+            tag.put("TweakClear", tweakClear);
 
-                CompoundNBT rotate = new CompoundNBT();
-                rotate.putInt("ButtonX", BUTTON_ADJUST_X);
-                tag.put("TweakRotate", rotate);
-
-                CompoundNBT balance = new CompoundNBT();
-                balance.putInt("ButtonX", BUTTON_ADJUST_X);
-                tag.put("TweakBalance", balance);
-
-                InterModComms.sendTo("craftingtweaks", "RegisterProvider", () -> tag);
-            } catch (Throwable t) {
-                System.err.println("[TConstructCraftingTweaksCompat] Failed to register provider: " + t.getMessage());
-            }
-        });
+            InterModComms.sendTo("craftingtweaks", "RegisterProvider", () -> tag);
+        } catch (Throwable t) {
+            LOGGER.error("Failed to register provider: " + t.getMessage());
+        }
     }
+
 }

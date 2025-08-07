@@ -1,33 +1,40 @@
 modLoader="javafml"
-loaderVersion="[36,)"
+loaderVersion="[40,)" # Forge 40.x for Minecraft 1.18.2
 license="MIT"
 
 [[mods]]
 modId="tconstructcraftingtweakscompat"
-version="1.0.0rc-1"
-authors="Spoony Panda"
-displayName="TConstruct x Crafting Tweaks compat"
+version="1.18.2-1.0.0-rc1"
+displayName="TConstruct Crafting Tweaks Compat"
+authors="Spoonypanda"
 description='''
-Adds Crafting Tweaks integration for Tinkers' Construct Crafting Station.
+Adds Crafting Tweaks button support for the Tinkers' Construct Crafting Station.
 '''
 
 [[dependencies.tconstructcraftingtweakscompat]]
 modId="forge"
 mandatory=true
-versionRange="[36,)"
+versionRange="[40,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.tconstructcraftingtweakscompat]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.18.2,1.19)"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.tconstructcraftingtweakscompat]]
 modId="tconstruct"
 mandatory=true
-versionRange="[3.3.4,)"
+versionRange="[3.5.0,)"
 ordering="AFTER"
 side="BOTH"
 
 [[dependencies.tconstructcraftingtweakscompat]]
 modId="craftingtweaks"
 mandatory=true
-versionRange="[12.2.1,)"
+versionRange="[13.0.0,)"
 ordering="AFTER"
-side="CLIENT"
+side="BOTH"
