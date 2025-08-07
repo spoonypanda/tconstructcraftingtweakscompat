@@ -1,0 +1,33 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="MIT"
+
+[[mods]]
+modId="tconstructcraftingtweakscompat"
+version="1.0.0rc-1"
+authors="Spoony Panda"
+displayName="TConstruct x Crafting Tweaks compat"
+description='''
+Adds Crafting Tweaks integration for Tinkers' Construct Crafting Station.
+'''
+
+[[dependencies.tconstructcraftingtweakscompat]]
+modId="forge"
+mandatory=true
+versionRange="[36,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.tconstructcraftingtweakscompat]]
+modId="tconstruct"
+mandatory=true
+versionRange="[3.3.4,)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.tconstructcraftingtweakscompat]]
+modId="craftingtweaks"
+mandatory=true
+versionRange="[12.2.1,)"
+ordering="AFTER"
+side="CLIENT"

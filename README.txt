@@ -1,0 +1,1 @@
+Simple cross compatibility between Crafting Tweaks and TiC Crafting Stations. Currently for 1.16.5 but may add it for other versions.
