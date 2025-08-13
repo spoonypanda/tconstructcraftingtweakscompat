@@ -1,3 +1,7 @@
-1.0.0rc-1
+1.16.2-1.0.0rc1
+===========
+-- Fixed an issue with api not registering properly server side for multiplayer
+
+1.16.2-1.0.0rc1
 ===========
 Initial Commit

@@ -6,7 +6,7 @@ plugins {
     }
 
 
-version = '1.0.0rc-1'
+version = '1.16.2-1.0.0rc2'
 group = 'com.spoonypanda'
 mod_id  = 'tconstructcraftingtweakscompat'
 mod_authors='Spoony Panda'
