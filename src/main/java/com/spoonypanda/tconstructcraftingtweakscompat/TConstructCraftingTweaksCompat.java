@@ -34,7 +34,7 @@ public class TConstructCraftingTweaksCompat
         try {
             CompoundTag tag = new CompoundTag();
             tag.putString("ContainerClass", "slimeknights.tconstruct.tables.menu.CraftingStationContainerMenu");
-            tag.putInt("GridSlotNumber", 1);
+            tag.putInt("GridSlotNumber", 0);
             tag.putInt("GridSize", 9);
 
             CompoundTag tweakRotate = new CompoundTag();
